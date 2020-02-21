@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package app;
+
+message App {
+   int32 id = 1;
+   string cover= 2;
+   string download = 3;
+}
+
+message GetAppReq {
+    int32 id = 1;
+}
+
+message GetAppRes {
+    App app = 1;
+}
+
+service AppService {
+    rpc GetApp(GetAppReq) returns (GetAppRes) {}
+}
+

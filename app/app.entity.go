@@ -11,6 +11,6 @@ type App struct {
 }
 
 // 因为生成的代码缺少provider, 需要手动在这里加上
-func ProviderAppRespsitory(db *gorm.DB) AppQuerySet{
+func ProviderAppRepository(db *gorm.DB) AppQuerySet{
 	return AppQuerySet{db: db}
 }

@@ -6,25 +6,40 @@
 package app
 
 import (
+	"github.com/gin-contrib/cache"
+	"github.com/gin-contrib/cache/persistence"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
+	"google.golang.org/grpc"
+	"minx.com/demo/grpc"
+	"time"
 )
 
 // Injectors from app.module.go:
 
 func inject(db *gorm.DB) AppController {
-	appQuerySet := ProviderAppRespsitory(db)
+	appQuerySet := ProviderAppRepository(db)
 	appService := ProviderAppService(appQuerySet)
 	appController := ProviderAppController(appService)
 	return appController
 }
 
+func inject2(db *gorm.DB) AppGrpc {
+	appQuerySet := ProviderAppRepository(db)
+	appService := ProviderAppService(appQuerySet)
+	appGrpc := ProviderAppGrpc(appService)
+	return appGrpc
+}
+
 // app.module.go:
 
-func InitAppModule(db *gorm.DB, r *gin.Engine) {
+func InitAppModule(db *gorm.DB, r *gin.Engine, store persistence.CacheStore, s *grpc.Server) {
 	controller := inject(db)
-	app := r.Group("/app")
+	api := inject2(db)
+	app2 := r.Group("/app")
 	{
-		app.GET("/all", controller.FindAll)
+		app2.
+			GET("/all", cache.CachePage(store, time.Minute, controller.FindAll))
 	}
+	app.RegisterAppServiceServer(s, &api)
 }
