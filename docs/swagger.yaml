@@ -1,0 +1,42 @@
+definitions:
+  app.AppDTO:
+    properties:
+      cover:
+        type: string
+      download:
+        type: string
+      id:
+        type: integer
+    type: object
+host: http://localhost:8080
+info:
+  contact: {}
+  description: "123"
+  license: {}
+  title: DI demo
+  version: "0.1"
+paths:
+  /apps:
+    get:
+      consumes:
+      - application/json
+      description: "123"
+      parameters:
+      - description: Order Type Desc or INC
+        in: path
+        name: order
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/app.AppDTO'
+            type: array
+      summary: "123"
+      tags:
+      - apps
+swagger: "2.0"

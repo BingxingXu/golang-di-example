@@ -1,0 +1,64 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "123",
+        "title": "DI demo",
+        "contact": {},
+        "license": {},
+        "version": "0.1"
+    },
+    "host": "http://localhost:8080",
+    "paths": {
+        "/apps": {
+            "get": {
+                "description": "123",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "apps"
+                ],
+                "summary": "123",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Order Type Desc or INC",
+                        "name": "order",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/app.AppDTO"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "app.AppDTO": {
+            "type": "object",
+            "properties": {
+                "cover": {
+                    "type": "string"
+                },
+                "download": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}
